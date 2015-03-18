@@ -1,23 +1,20 @@
 ---
 title: "Statistical inference courese project 2"
-output: pdf_document
+output: word_document
 ---
 
-## Problem explanation 
+This document is written by Hyunsik Shim.
+
+## Overview - Basic inferential data analysis.
 
 we're going to analyze the ToothGrowth data in the R datasets package. 
 
-### 1. Load the ToothGrowth data and perform some basic exploratory data analyses 
+#### 1. Load the ToothGrowth data and perform some basic exploratory data analyses 
 
 ```{r}
 library(ggplot2)
 library(datasets)
-
 data(ToothGrowth)
-head(ToothGrowth)
-```
-
-```{r}
 g1 <- ggplot(ToothGrowth, aes(x=factor(dose),y=len,fill=factor(dose)))
 g1 + geom_boxplot(notch=F) + facet_grid(.~supp) + 
     scale_x_discrete("Dosage in mg") + 
@@ -27,19 +24,15 @@ g1 + geom_boxplot(notch=F) + facet_grid(.~supp) +
 
 - The above diagram reveals that longer teeth tend to use higher dosage.
 
-### 2. Provide a basic summary of the data.
-
+#### 2. Provide a basic summary of the data.
 ```{r}
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 summary(ToothGrowth)
-
 table(ToothGrowth$supp, ToothGrowth$dose)
 ```
-
 - We can see there are two supplements (OJ and VC) and three kinds of dose (0.5, 1, 2) in this dataset.
 
-
-### 3. Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose.
+#### 3. Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose.
 ```{r}
 ttest.equal <- t.test(len~supp, paired=F, var.equal=T, data=ToothGrowth)
 ttest.unequal <- t.test(len~supp, paired=F, var.equal=F, data=ToothGrowth)
@@ -78,9 +71,8 @@ dose.result <- rbind(dose0510.result,dose0520.result,dose1020.result)
 dose.result
 
 ```
-
 - From table above, we can see that the dosages do have impact on tooth growth. All of p values are very small and the confidence intervals do not contain zero. So we can deny the null hypthesis and conclude that true difference in means is not equal to 0 among the groups with different dosages. It is clear to see that higher dosage tends to result in higher tooth length.
 
-### 4. State your conclusions and the assumptions needed for your conclusions.
+#### 4. State your conclusions and the assumptions needed for your conclusions.
 
 - To summarize, based on the analysis above,  we cannot say that orange juice and vitamin C have obvious different impact on tooth growth. But, we can conclude that across supplements for each dose, 2mg dose has larger impact on tooth growth than 1mg and 0.5mg, and 1mg dose has more impact than 0.5mg dose. 

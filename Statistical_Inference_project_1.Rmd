@@ -1,9 +1,11 @@
 ---
 title: "Statistical inference courese project 1"
-output: pdf_document
+output: word_document
 ---
 
-## Problem explanation 
+This document is written by Hyunsik Shim.
+
+## Overview  - A simulation exercise
 
 The exponential distribution can be simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also also 1/lambda. Set lambda = 0.2 for all of the simulations. In this simulation, you will investigate the distribution of averages of 40 exponential(0.2)s. Note that you will need to do a thousand or so simulated averages of 40 exponentials.
 
@@ -18,7 +20,7 @@ means <- data.frame(x = sapply(nsims, function(x) {mean(rexp(n, lambda))}))
 head(means)
 ```
 
-1. Show where the distribution is centered at and compare it to the theoretical center of the distribution.
+#### 1. Show where the distribution is centered at and compare it to the theoretical center of the distribution.
 ```{r}
 mean(means$x)
 
@@ -28,7 +30,7 @@ sd(means$x)
 
 - SD of my simulation is `r sd(means$x)` and Expected SD is `r (1/lambda)/sqrt(n)`.
 
-2. Show how variable it is and compare it to the theoretical variance of the distribution.
+#### 2. Show how variable it is and compare it to the theoretical variance of the distribution.
 
 ```{r}
 var(means$x)
@@ -36,7 +38,7 @@ var(means$x)
 
 - Variance of my simulaton is `r var(means$x)` and theoretical variance of the distribution is `r ((1/lambda)/sqrt(40))^2`.
 
-3. Show that the distribution is approximately normal.
+#### 3. Show that the distribution is approximately normal.
 
 ```{r}
 library(ggplot2)
@@ -46,7 +48,7 @@ ggplot(data = means, aes(x = x)) +
     stat_function(fun = dnorm, arg = list(mean = 5, sd = sd(means$x)))
 ```
 
-4. Evaluate the coverage of the confidence interval for 1/lambda: X±1.96S/sqrt(n).
+We can evaluate the coverage of the confidence interval for 1/lambda: X±1.96S/sqrt(n).
 
 ```{r}
 mean(means$x) + c(-1,1)*1.96*sd(means$x)/sqrt(nrow(means))
